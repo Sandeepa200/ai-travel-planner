@@ -1,0 +1,50 @@
+/*
+ * Install the Generative AI SDK
+ *
+ * $ npm install @google/generative-ai
+ */
+
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_API_KEY;
+const genAI = new GoogleGenerativeAI(apiKey);
+
+const model = genAI.getGenerativeModel({
+  model: "gemini-1.5-flash",
+});
+
+const generationConfig = {
+  temperature: 0.1,
+  topP: 0.95,
+  topK: 64,
+  maxOutputTokens: 8192,
+  responseMimeType: "application/json",
+};
+
+export const chatSession = model.startChat({
+  generationConfig,
+  // safetySettings: Adjust safety settings
+  // See https://ai.google.dev/gemini-api/docs/safety-settings
+  history: [
+    {
+      role: "user",
+      parts: [
+        {
+          text: "Generate Travel Plan for Location : Las Vegas, for 3 Days for Couple with a Cheap budget ,Give me a Hotels options list with\nHotelName, Hotel address, Price, hotel image url, geo coordinates, rating, descriptions and suggest itinerary with placeName, Place\nDetails, Place Image Uri, Geo Coordinates, ticket Pricing, rating, Time travel each of the location for 3 days with each day plan with\nbest time to visit in JSON format",
+        },
+      ],
+    },
+    {
+      role: "model",
+      parts: [
+        {
+          text: '```json\n{\n  "hotelOptions": [\n    {\n      "hotelName": "The D Las Vegas",\n      "hotelAddress": "301 Fremont Street, Las Vegas, NV 89101",\n      "price": "$50-$100 per night",\n      "hotelImageUrl": "https://www.theD.com/images/hotel/the-d-hotel-exterior.jpg",\n      "geoCoordinates": "36.1699, -115.1423",\n      "rating": 4.0,\n      "description": "A budget-friendly hotel located in the heart of Fremont Street Experience, offering a casino, restaurants, and a rooftop pool."\n    },\n    {\n      "hotelName": "Golden Nugget Las Vegas",\n      "hotelAddress": "129 E Fremont Street, Las Vegas, NV 89101",\n      "price": "$70-$150 per night",\n      "hotelImageUrl": "https://www.goldennugget.com/las-vegas/media/images/hotel/golden-nugget-las-vegas-hotel-exterior.jpg",\n      "geoCoordinates": "36.1697, -115.1420",\n      "rating": 4.5,\n      "description": "A historic hotel with a vibrant casino, multiple restaurants, and a famous shark tank."\n    },\n    {\n      "hotelName": "Circus Circus Hotel & Casino",\n      "hotelAddress": "2880 Las Vegas Blvd S, Las Vegas, NV 89109",\n      "price": "$40-$80 per night",\n      "hotelImageUrl": "https://www.circuscircus.com/media/images/hotel/circus-circus-hotel-exterior.jpg",\n      "geoCoordinates": "36.1122, -115.1728",\n      "rating": 3.5,\n      "description": "A family-friendly hotel with a circus theme, a midway, and a variety of dining options."\n    },\n    {\n      "hotelName": "The Strat Hotel, Casino & SkyPod",\n      "hotelAddress": "2000 S Las Vegas Blvd, Las Vegas, NV 89104",\n      "price": "$60-$120 per night",\n      "hotelImageUrl": "https://www.thestrat.com/media/images/hotel/the-strat-hotel-exterior.jpg",\n      "geoCoordinates": "36.1083, -115.1691",\n      "rating": 4.0,\n      "description": "A hotel with a unique tower offering panoramic views of the city, a casino, and a variety of restaurants."\n    }\n  ],\n  "itinerary": [\n    {\n      "day": 1,\n      "plan": [\n        {\n          "time": "9:00 AM",\n          "placeName": "Fremont Street Experience",\n          "placeDetails": "A pedestrian-friendly street with a canopy of lights, live music, street performers, and casinos.",\n          "placeImageUri": "https://www.vegasexperience.com/media/images/attractions/fremont-street-experience.jpg",\n          "geoCoordinates": "36.1699, -115.1423",\n          "ticketPricing": "Free",\n          "rating": 4.5,\n          "timeTravel": "2 hours"\n        },\n        {\n          "time": "11:00 AM",\n          "placeName": "The Mob Museum",\n          "placeDetails": "A museum dedicated to the history of organized crime in the United States.",\n          "placeImageUri": "https://www.themobmuseum.org/media/images/attractions/the-mob-museum-exterior.jpg",\n          "geoCoordinates": "36.1699, -115.1423",\n          "ticketPricing": "$25-$30",\n          "rating": 4.0,\n          "timeTravel": "2 hours"\n        },\n        {\n          "time": "1:00 PM",\n          "placeName": "Heart Attack Grill",\n          "placeDetails": "A restaurant known for its unhealthy but delicious burgers.",\n          "placeImageUri": "https://www.heartattackgrill.com/media/images/restaurants/heart-attack-grill-exterior.jpg",\n          "geoCoordinates": "36.1699, -115.1423",\n          "ticketPricing": "N/A",\n          "rating": 3.5,\n          "timeTravel": "1 hour"\n        },\n        {\n          "time": "2:00 PM",\n          "placeName": "Neon Museum",\n          "placeDetails": "A museum showcasing vintage neon signs from Las Vegas.",\n          "placeImageUri": "https://www.neonmuseum.org/media/images/attractions/neon-museum-exterior.jpg",\n          "geoCoordinates": "36.1699, -115.1423",\n          "ticketPricing": "$20-$25",\n          "rating": 4.0,\n          "timeTravel": "2 hours"\n        },\n        {\n          "time": "4:00 PM",\n          "placeName": "Free Show at the Bellagio Fountains",\n          "placeDetails": "A spectacular water and light show synchronized to music.",\n          "placeImageUri": "https://www.bellagio.com/media/images/attractions/bellagio-fountains-exterior.jpg",\n          "geoCoordinates": "36.1146, -115.1725",\n          "ticketPricing": "Free",\n          "rating": 5.0,\n          "timeTravel": "1 hour"\n        }\n      ]\n    },\n    {\n      "day": 2,\n      "plan": [\n        {\n          "time": "9:00 AM",\n          "placeName": "Hoover Dam",\n          "placeDetails": "A massive dam on the Colorado River, a marvel of engineering.",\n          "placeImageUri": "https://www.hooverdam.com/media/images/attractions/hoover-dam-exterior.jpg",\n          "geoCoordinates": "36.0000, -114.9000",\n          "ticketPricing": "$30-$40",\n          "rating": 4.5,\n          "timeTravel": "4 hours"\n        },\n        {\n          "time": "1:00 PM",\n          "placeName": "In-N-Out Burger",\n          "placeDetails": "A popular fast-food chain known for its burgers and fries.",\n          "placeImageUri": "https://www.in-n-out.com/media/images/restaurants/in-n-out-burger-exterior.jpg",\n          "geoCoordinates": "36.1699, -115.1423",\n          "ticketPricing": "N/A",\n          "rating": 4.0,\n          "timeTravel": "1 hour"\n        },\n        {\n          "time": "2:00 PM",\n          "placeName": "The LINQ Promenade",\n          "placeDetails": "An outdoor shopping and dining promenade with a High Roller observation wheel.",\n          "placeImageUri": "https://www.thelinq.com/media/images/attractions/the-linq-promenade-exterior.jpg",\n          "geoCoordinates": "36.1146, -115.1725",\n          "ticketPricing": "Free",\n          "rating": 4.0,\n          "timeTravel": "2 hours"\n        },\n        {\n          "time": "4:00 PM",\n          "placeName": "Free Show at the Bellagio Conservatory & Botanical Garden",\n          "placeDetails": "A stunning display of flowers and plants.",\n          "placeImageUri": "https://www.bellagio.com/media/images/attractions/bellagio-conservatory-botanical-garden-exterior.jpg",\n          "geoCoordinates": "36.1146, -115.1725",\n          "ticketPricing": "Free",\n          "rating": 4.5,\n          "timeTravel": "1 hour"\n        }\n      ]\n    },\n    {\n      "day": 3,\n      "plan": [\n        {\n          "time": "9:00 AM",\n          "placeName": "Red Rock Canyon National Conservation Area",\n          "placeDetails": "A scenic area with red rock formations, hiking trails, and scenic drives.",\n          "placeImageUri": "https://www.nps.gov/redr/media/images/attractions/red-rock-canyon-national-conservation-area-exterior.jpg",\n          "geoCoordinates": "36.1699, -115.1423",\n          "ticketPricing": "$15-$20",\n          "rating": 4.5,\n          "timeTravel": "4 hours"\n        },\n        {\n          "time": "1:00 PM",\n          "placeName": "The Venetian and The Palazzo",\n          "placeDetails": "Luxury hotels with a replica of Venice, Italy, including canals and gondolas.",\n          "placeImageUri": "https://www.venetian.com/media/images/attractions/the-venetian-and-the-palazzo-exterior.jpg",\n          "geoCoordinates": "36.1146, -115.1725",\n          "ticketPricing": "Free",\n          "rating": 4.0,\n          "timeTravel": "2 hours"\n        },\n        {\n          "time": "3:00 PM",\n          "placeName": "The High Roller Observation Wheel",\n          "placeDetails": "A giant observation wheel offering panoramic views of the city.",\n          "placeImageUri": "https://www.thelinq.com/media/images/attractions/the-high-roller-observation-wheel-exterior.jpg",\n          "geoCoordinates": "36.1146, -115.1725",\n          "ticketPricing": "$30-$40",\n          "rating": 4.5,\n          "timeTravel": "1 hour"\n        },\n        {\n          "time": "4:00 PM",\n          "placeName": "Free Show at the Wynn Las Vegas",\n          "placeDetails": "A spectacular water and light show synchronized to music.",\n          "placeImageUri": "https://www.wynnlasvegas.com/media/images/attractions/wynn-las-vegas-exterior.jpg",\n          "geoCoordinates": "36.1146, -115.1725",\n          "ticketPricing": "Free",\n          "rating": 4.5,\n          "timeTravel": "1 hour"\n        }\n      ]\n    }\n  ]\n}\n```\n\n**Notes:**\n\n* This itinerary is just a suggestion and can be customized based on your interests and preferences.\n* The prices for hotels and attractions are approximate and may vary depending on the time of year and availability.\n* It\'s recommended to book your hotel and attractions in advance, especially during peak season.\n* Consider using public transportation or ride-sharing services to get around Las Vegas, as parking can be expensive.\n* Be sure to drink plenty of water, especially during the summer months.\n* Have fun and enjoy your trip to Las Vegas!\n',
+        },
+      ],
+    },
+  ],
+});
+
+
+
+
