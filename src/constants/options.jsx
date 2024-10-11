@@ -4,21 +4,21 @@ export const SelectTravelsList = [
         title: "Just Me",
         desc: "A Sole Travels in Exploration",
         icon: "✈️",
-        people: "1",
+        people: "1 people",
     },
     {
         id: 2,
         title: "Couple",
         desc: "A Couple Trip",
         icon: "🥂",
-        people: "2",
+        people: "2 people",
     },
     {
         id: 3,
         title: "Family",
         desc: "A Family Trip",
         icon: "🏡",
-        people: "4",
+        people: "3 to 5 people",
         
     },
     {
@@ -26,7 +26,7 @@ export const SelectTravelsList = [
         title: "Friends",
         desc: "A Friends Trip",
         icon: "⛵",
-        people: "2",
+        people: "6 to 10 people",
     }
     
 ]
